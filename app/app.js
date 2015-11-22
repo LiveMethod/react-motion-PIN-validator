@@ -1,16 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-// import Spring from "./spring.jsx";
 import {Motion, TransitionMotion, spring} from 'react-motion';
-
-// class Demo extends React.Component {
-//   render(){
-//     return(
-
-//     )
-//   }
-// }
-
 
 const Wrap = React.createClass ({
   getInitialState() {
@@ -24,7 +14,6 @@ const Wrap = React.createClass ({
 
   handleClick: function(input){
     if(!this.state.isSubmitting){
-      // console.log('pressed ' + input);
       if(this.state.cardDigits.length < 4){
         this.state.cardDigits.push(input);
         console.log(this.state.cardDigits);
@@ -45,7 +34,6 @@ const Wrap = React.createClass ({
   handleDelete: function(){
     if(!this.state.isSubmitting){
       console.log('delete the last of ' + this.state.cardDigits);
-      //this.setState({cardDigits: this.state.cardDigits.pop()});
       this.state.cardDigits.pop();
       console.log(this.state.cardDigits);
       this.setState({cardDigits: this.state.cardDigits});
@@ -57,8 +45,8 @@ const Wrap = React.createClass ({
     // arbitrarily delay to simulate
     // an API call
     setTimeout(function(){
-      if(digits == '1492'){
-      console.log('ding ding ding!');
+      if(digits == '1234'){
+      console.log('Correct PIN!');
       self.setState({isComplete: true});
     } else{
       let attempts = self.state.validationAttempts + 1;
@@ -67,15 +55,13 @@ const Wrap = React.createClass ({
         validationAttempts: attempts, 
         cardDigits: []
       });
-      console.log('ya goofed. ya goofball.');
+      console.log('That PIN was incorrect. Try again');
     }
     }, 1000)
   },
 
   render: function(){
     
-    // console.log(JSON.stringify(this.state));
-
     const {cardDigits, validationAttempts} = this.state;
 
     let style = {
@@ -169,15 +155,6 @@ const Keyboard = React.createClass({
   }
 });
 
-// defaultStyle={{
-//   y: 120,
-//   o: -0.3
-// }}
-// style={{
-//   y: spring(5, [90, 11]),
-//   o: spring(1, [50, 14])
-// }}
-
 const CardGraphic = React.createClass ({
 
   // init position
@@ -189,7 +166,7 @@ const CardGraphic = React.createClass ({
     };
   },
 
-  // where it gets sent
+  // possible states
   getStyle(key) {
 
     if (this.props.state.isComplete){
@@ -216,10 +193,6 @@ const CardGraphic = React.createClass ({
     }
   },
 
-  componentWillUnmount() {
-      console.log('so this happened');
-  },
-
   render: function(){
 
     this.props.isSubmitting && console.log('i noticed');
@@ -237,11 +210,10 @@ const CardGraphic = React.createClass ({
               top: motion.y + '%',
               opacity: motion.o
             }}>
-              <p>sdlfsd</p>
-              <p>sdlfsd</p>
-              <p>sdlfsd</p>
-              <p>sdlfsd</p>
-              <p>sdlfsd</p>
+              <p>Card Image Here</p>
+              <p>Card Image Here</p>
+              <p>Card Image Here</p>
+              <p>Card Image Here</p>
             </div>)}
         </Motion>
     )
@@ -315,5 +287,5 @@ const CardNumbers = React.createClass({
 
 ReactDOM.render(
   <Wrap/>,
-  document.getElementById('fuck')
+  document.getElementById('container')
 );
