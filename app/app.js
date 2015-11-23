@@ -132,6 +132,7 @@ const KeyboardContainer = React.createClass({
             <div style={{
               width: '100%',
               position: 'absolute',
+              backgroundColor: '#ffffff',
               left: 0,
               bottom: motion.y,
               opacity: motion.o
@@ -178,8 +179,9 @@ const Key = React.createClass({
       fontWeight: '200',
       paddingTop: '12px',
       paddingBottom: '12px',
+      boxSizing:'border-box',
       border:'1px solid #E9F1F6',
-      width: '32.7%', 
+      width: '33.333%', 
       float:'left', 
       background: 'rgba(255,255,255,'+ (this.state.mouseDown ? '0.8' : '1') + ')',
       textAlign: 'center',
