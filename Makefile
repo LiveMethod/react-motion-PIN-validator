@@ -17,3 +17,6 @@ static: dist
 clean: 
 	rm -rf ./dist
 	rm -rf ./node_modules
+
+pages: build
+	-cp -r ./dist/ ./
