@@ -9,11 +9,7 @@ Trying out react-motion with an interface for validating PINs
 
 Try some wrong PINs to see the error states.
 
-Correct PIN is 1234
+Correct pin matches card image (9017).
 
 ##TODO:
-* status text under pin numbers
-* spinners during check
-* hover / down states for keyboard buttons
-* lockout after too many failed attempts
-* success transition
+* success transition to other screen?
