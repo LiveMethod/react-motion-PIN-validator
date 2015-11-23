@@ -11,7 +11,7 @@ dist:
 
 # copy static assets from app to dist
 static: dist
-	-cp -r ./app/img ./dist/img
+	-cp -r ./app/img ./dist
 
 # scrub node modules and generated files
 clean: 
