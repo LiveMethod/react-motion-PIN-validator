@@ -7,8 +7,10 @@ const Wrap = React.createClass ({
     return {
       cardDigits: [],
       validationAttempts: 0,
+      maxAttempts: 2,
       isSubmitting: false,
-      isComplete: false
+      isComplete: false,
+      isLockedOut: false
     };
   },
 
@@ -45,22 +47,31 @@ const Wrap = React.createClass ({
     // arbitrarily delay to simulate
     // an API call
     setTimeout(function(){
+      // if correct
       if(digits == '1234'){
-      console.log('Correct PIN!');
-      self.setState({isComplete: true});
-    } else{
-      let attempts = self.state.validationAttempts + 1;
-      self.setState({
-        isSubmitting: false,
-        validationAttempts: attempts, 
-        cardDigits: []
-      });
-      console.log('That PIN was incorrect. Try again');
-    }
+        console.log('Correct PIN!');
+        self.setState({isComplete: true});
+
+      // if incorrect
+      } else{
+        let attempts = self.state.validationAttempts + 1;
+        self.setState({
+          isSubmitting: false,
+          validationAttempts: attempts,
+          // use attempts, not state.validationAttempts here, because
+          // state doesn't know attempts is +1 until after this call
+          isLockedOut: attempts >= self.state.maxAttempts ? true : false,
+          cardDigits: []
+        });
+        self.state.validationAttempts >= self.state.maxAttempts ? console.log('conditional locked') : '';
+        self.state.isLockedOut && console.log('state locked');
+        console.log('That PIN was incorrect. Try again');
+      }
     }, 1000)
   },
 
   render: function(){
+    console.log('render');
     
     const {cardDigits, validationAttempts} = this.state;
 
@@ -85,7 +96,7 @@ const Wrap = React.createClass ({
 
 const KeyboardContainer = React.createClass({
   getStyle(){
-    if(this.props.state.isComplete){
+    if(this.props.state.isComplete || this.props.state.isLockedOut){
       return{
         y: spring(-350, [100, 19]),
         o: spring(0, [50, 14])
@@ -169,7 +180,7 @@ const CardGraphic = React.createClass ({
   // possible states
   getStyle(key) {
 
-    if (this.props.state.isComplete){
+    if (this.props.state.isComplete || this.props.state.isLockedOut){
       return {
         // send it up when it fades out
         y: spring(-40, [100, 11]),
@@ -230,7 +241,7 @@ const CardNumbers = React.createClass({
 
   getStyle(key){
     // complete
-    if(this.props.state.isComplete){
+    if(this.props.state.isComplete || this.props.state.isLockedOut){
       return {
         b: spring(50, [50, 14]), 
         o: spring(0, [50, 14]), 
