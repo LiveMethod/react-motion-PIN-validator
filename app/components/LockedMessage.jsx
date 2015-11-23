@@ -28,8 +28,6 @@ const LockedMessage = React.createClass({
     }
   },
   render: function(){
-
-    console.log('skjdfhdhf');
     return(
       <Motion
         defaultStyle={this.getDefaultStyle()}
