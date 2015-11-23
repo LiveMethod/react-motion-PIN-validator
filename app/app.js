@@ -7,7 +7,7 @@ const Wrap = React.createClass ({
     return {
       cardDigits: [],
       validationAttempts: 0,
-      maxAttempts: 2,
+      maxAttempts: 3,
       isSubmitting: false,
       isComplete: false,
       isLockedOut: false
@@ -63,15 +63,18 @@ const Wrap = React.createClass ({
           isLockedOut: attempts >= self.state.maxAttempts ? true : false,
           cardDigits: []
         });
-        self.state.validationAttempts >= self.state.maxAttempts ? console.log('conditional locked') : '';
-        self.state.isLockedOut && console.log('state locked');
-        console.log('That PIN was incorrect. Try again');
+        console.log(
+          'That PIN was incorrect. ' + 
+          (attempts >= self.state.maxAttempts ?
+            'You are locked out after too many tries.' :
+            'Try Again'
+          )
+        );
       }
     }, 1000)
   },
 
   render: function(){
-    console.log('render');
     
     const {cardDigits, validationAttempts} = this.state;
 
@@ -86,6 +89,7 @@ const Wrap = React.createClass ({
     }
     return(
       <div style={style}>
+        {this.state.isComplete && <Success state={this.state}/>}
         <CardGraphic state={this.state}/>
         <CardNumbers state={this.state}/>
         <KeyboardContainer state={this.state} handleClick={this.handleClick} handleDelete={this.handleDelete}/>
@@ -290,6 +294,48 @@ const CardNumbers = React.createClass({
             <div style={digitStyle}>{typeof this.props.state.cardDigits[1] !== 'undefined' ? this.props.state.cardDigits[1] : ''}</div>
             <div style={digitStyle}>{typeof this.props.state.cardDigits[2] !== 'undefined' ? this.props.state.cardDigits[2] : ''}</div>
             <div style={digitStyle}>{typeof this.props.state.cardDigits[3] !== 'undefined' ? this.props.state.cardDigits[3] : ''}</div>
+          </div>)}
+      </Motion>
+    )
+  }
+});
+
+const Success = React.createClass({
+  getDefaultStyle(){
+    return {
+      b: 0, // bottom
+      o: 0, // opacity
+    }
+  },
+
+  getStyle(key){
+    // normal
+    if(1==1){
+      return {
+        b: spring(50, [90, 11]), 
+        o: spring(1, [50, 14]), 
+      }
+    }
+  },
+  render: function(){
+
+    console.log('skjdfhdhf');
+    return(
+      <Motion
+        defaultStyle={this.getDefaultStyle()}
+        style={this.getStyle()}
+      >
+        {motion => (
+          <div style={{
+            position: 'absolute',
+            bottom: motion.b + '%',
+            left: '10%',
+            width: '50%',
+            height: '50%',
+            background: 'red',
+            opacity: motion.o
+          }}>
+            <img src="./img/check.svg" alt="success"/>
           </div>)}
       </Motion>
     )
